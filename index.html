@@ -527,12 +527,19 @@ async function initializeQuiz() {
               localStorage.setItem('lastParticipation', participationKey);
           }
 
-          // التحقق من وقت المسابقة
           function checkQuizTime() {
-              const now = new Date();
-              const hours = now.getHours();
-              return hours >= 19 && hours < 20; // من 7 مساءً حتى 8 مساءً
-          }
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    
+    // من الساعة 18:00 (6 مساءً) حتى الساعة 18:15 (6:15 مساءً)
+    if (hours === 18) {
+        return minutes < 15; // قبل 6:15 مساءً
+    }
+    
+    return false; // خارج النطاق المحدد
+}
+
 
           // تحديث رسالة الوقت
           function updateTimeMessage() {
